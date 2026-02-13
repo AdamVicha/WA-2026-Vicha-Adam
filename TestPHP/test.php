@@ -24,6 +24,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit ipsum odit ipsa, atque molestias officia eveniet non exercitationem expedita aliquam animi alias eum tempore maxime? Libero nobis corporis neque repudiandae!</p>
     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit ipsum odit ipsa, atque molestias officia eveniet non exercitationem expedita aliquam animi alias eum tempore maxime? Libero nobis corporis neque repudiandae!</p>
     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit ipsum odit ipsa, atque molestias officia eveniet non exercitationem expedita aliquam animi alias eum tempore maxime? Libero nobis corporis neque repudiandae!</p>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit ipsum odit ipsa, atque molestias officia eveniet non exercitationem expedita aliquam animi alias eum tempore maxime? Libero nobis corporis neque repudiandae!</p>
     <form method="post">
         <input type="text" name="name" placeholder="Zadejte své jméno">
         <input type="number" name="age" placeholder="Zadejte svůj věk">
