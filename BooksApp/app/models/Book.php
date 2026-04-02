@@ -2,12 +2,12 @@
 // Cesta: BooksApp/app/models/Book.php
 
 class Book {
-    private $conn;
     private $table_name = "books"; // Předpokládám, že se tvoje tabulka jmenuje 'books'
 
-    // Konstruktor přijme připojení k DB z tvé třídy Database
+    private PDO $db;
+    
     public function __construct($db) {
-        $this->conn = $db;
+        $this->db = $db;
     }
 
     // Metoda pro vytvoření záznamu
@@ -18,7 +18,7 @@ class Book {
                   (title, author, isbn, category, subcategory, year, price, link, description) 
                   VALUES (:title, :author, :isbn, :category, :subcategory, :year, :price, :link, :description)";
 
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->db->prepare($query);
 
         // Očištění dat (základní bezpečnostní opatření)
         $title = htmlspecialchars(strip_tags($title));
@@ -42,6 +42,62 @@ class Book {
             return true;
         }
         return false;
+    }
+
+        // Získání jedné konkrétní knihy podle jejího ID
+    public function getById($id) {
+        $sql = "SELECT * FROM books WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        
+        // Používá se fetch() místo fetchAll(), protože očekáváme maximálně jeden výsledek.
+        // Vrátí asociativní pole s daty knihy, nebo false, pokud kniha neexistuje.
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Aktualizace existující knihy
+    public function update(
+        $id, $title, $author, $category, $subcategory, 
+        $year, $price, $isbn, $description, $link, $images = []
+    ) {
+        $sql = "UPDATE books 
+                SET title = :title, 
+                    author = :author, 
+                    category = :category, 
+                    subcategory = :subcategory, 
+                    year = :year, 
+                    price = :price, 
+                    isbn = :isbn, 
+                    description = :description, 
+                    link = :link, 
+                    images = :images
+                WHERE id = :id";
+                
+        $stmt = $this->db->prepare($sql);
+
+        // Parametrů je stejné množství jako u create, navíc je pouze :id
+        return $stmt->execute([
+            ':id' => $id,
+            ':title' => $title,
+            ':author' => $author,
+            ':category' => $category,
+            ':subcategory' => $subcategory ?: null,
+            ':year' => $year,
+            ':price' => $price,
+            ':isbn' => $isbn,
+            ':description' => $description,
+            ':link' => $link,
+            ':images' => json_encode($images)
+        ]);
+    }
+
+    // Trvalé smazání knihy z databáze
+    public function delete($id) {
+        $sql = "DELETE FROM books WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        
+        // Vrací true při úspěchu, false při chybě
+        return $stmt->execute([':id' => $id]);
     }
 }
 ?>
