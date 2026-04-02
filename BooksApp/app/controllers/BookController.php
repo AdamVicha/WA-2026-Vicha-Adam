@@ -6,6 +6,17 @@ require_once '../app/models/Book.php';
 class BookController {
     
     public function index() {
+        // 1. Vytvoření připojení k databázi
+        $database = new Database();
+        $db = $database->getConnection();
+
+        // 2. Vytvoření instance modelu Book
+        $bookModel = new Book($db);
+
+        // 3. Načtení všech knih do proměnné $books
+        $books = $bookModel->getAll();
+
+        // 4. Načtení pohledu (pohled nyní uvidí proměnnou $books)
         require_once '../app/views/books/books_list.php';
     }
 
@@ -174,16 +185,45 @@ class BookController {
         }
     }
 
-    protected function addSuccessMessage($message) {
+    // Zobrazení detailu knihy
+    public function show($id = null) {
+        // Kontrola, zda bylo předáno ID
+        if (!$id) {
+            $this->addErrorMessage('Nebylo zadáno ID knihy k zobrazení.');
+            header('Location: ' . BASE_URL . '/index.php');
+            exit;
+        }
 
+        require_once '../app/models/Database.php';
+        require_once '../app/models/Book.php';
+
+        $database = new Database();
+        $db = $database->getConnection();
+
+        $bookModel = new Book($db);
+        $book = $bookModel->getById($id); 
+
+        // Bezpečnostní kontrola, zda kniha existuje
+        if (!$book) {
+            $this->addErrorMessage('Požadovaná kniha nebyla nalezena.');
+            header('Location: ' . BASE_URL . '/index.php');
+            exit;
+        }
+
+        // Načtení pohledu s detailem knihy
+        require_once '../app/views/books/book_details.php';
+    }
+
+    protected function addSuccessMessage($message) {
+        $_SESSION['flash_messages'][] = ['type' => 'success', 'text' => $message];
     }
 
     protected function addErrorMessage($message) {
-
+        $_SESSION['flash_messages'][] = ['type' => 'error', 'text' => $message];
     }
 
     protected function addNoticeMessage($message) {
-
+        $_SESSION['flash_messages'][] = ['type' => 'notice', 'text' => $message];
     }
 }
 ?>

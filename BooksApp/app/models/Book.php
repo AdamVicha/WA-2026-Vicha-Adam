@@ -99,5 +99,15 @@ class Book {
         // Vrací true při úspěchu, false při chybě
         return $stmt->execute([':id' => $id]);
     }
+
+    // Metoda pro získání všech knih z databáze
+    public function getAll() {
+        $sql = "SELECT * FROM " . $this->table_name;
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        
+        // Vrátí pole všech knih
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>
