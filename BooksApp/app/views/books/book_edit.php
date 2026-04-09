@@ -1,22 +1,5 @@
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Upravit knihu</title>
-</head>
-<body class="bg-gray-100 text-gray-800 font-sans min-h-screen flex flex-col">
-    <header class="bg-indigo-600 text-white shadow-md">
-        <div class="max-w-3xl mx-auto px-4 py-6 flex justify-between items-center">
-            <h1 class="text-3xl font-bold">Aplikace Knihovna</h1> 
-            <nav>
-                <a href="<?= BASE_URL ?>/index.php" class="text-indigo-100 hover:text-white transition font-medium">&larr; Zpět na seznam</a>
-            </nav>
-        </div>
-    </header>
-
-    <main class="flex-grow max-w-3xl mx-auto w-full px-4 py-8">
+<?php require_once '../app/views/layout/header.php'; ?>
+<main class="flex-grow max-w-3xl mx-auto w-full px-4 py-8">
         <div class="bg-white rounded-xl shadow-md overflow-hidden p-6 md:p-8">
             <div class="mb-6 border-b border-gray-200 pb-4">
                 <h2 class="text-2xl font-semibold text-gray-800">Upravit knihu (ID: <?= htmlspecialchars($book['id'] ?? '') ?>)</h2>
@@ -84,11 +67,4 @@
             </form>
         </div>
     </main>
-
-    <footer class="bg-gray-800 text-gray-400 py-6 mt-auto">
-        <div class="max-w-3xl mx-auto px-4 text-center">
-            <p>&copy; WA 2026 - Výukový projekt | Stylováno pomocí Tailwind CSS</p>
-        </div>
-    </footer>
-</body>
-</html>
+<?php require_once '../app/views/layout/footer.php'; ?>
