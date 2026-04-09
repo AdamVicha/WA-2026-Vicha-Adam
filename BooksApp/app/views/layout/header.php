@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Aplikace Knihovna</title>
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans min-h-screen flex flex-col">
     <header class="bg-indigo-600 text-white shadow-md">
-        <div class="max-w-3xl mx-auto px-4 py-6 flex justify-between items-center">
+        <div class="max-w-6xl mx-auto px-4 py-6 flex justify-between items-center">
             <h1 class="text-3xl font-bold">Aplikace Knihovna</h1> 
             <nav>
-                <a href="<?= BASE_URL ?>/index.php" class="text-indigo-100 hover:text-white transition font-medium">&larr; Zpět na seznam</a>
+                <ul class="flex gap-4 m-0 p-0 list-none">
+                    <li><a href="<?= BASE_URL ?>/index.php" class="hover:text-indigo-200 transition">Seznam knih</a></li>
+                    <li><a href="<?= BASE_URL ?>/index.php?url=book/create" class="bg-white text-indigo-600 px-4 py-2 rounded-md font-semibold hover:bg-indigo-50 transition shadow-sm">Přidat novou knihu</a></li>
+                </ul>
             </nav>
         </div>
     </header>
@@ -64,4 +68,3 @@
                 });
             </script>
         <?php endif; ?>
-    </main>

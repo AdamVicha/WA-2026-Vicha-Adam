@@ -1,4 +1,4 @@
-<?php require_once '../app/views/layout/header.php'; ?>
+<?php require_once '../app/views/layout/header.php'; ?>  
 <div class="bg-white rounded-xl shadow-md overflow-hidden">
             <div class="p-6 border-b border-gray-200">
                 <h2 class="text-2xl font-semibold text-gray-700 m-0">Dostupné knihy</h2>
