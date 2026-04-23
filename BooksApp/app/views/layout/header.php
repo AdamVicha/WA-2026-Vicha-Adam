@@ -11,9 +11,17 @@
         <div class="max-w-6xl mx-auto px-4 py-6 flex justify-between items-center">
             <h1 class="text-3xl font-bold">Aplikace Knihovna</h1> 
             <nav>
-                <ul class="flex gap-4 m-0 p-0 list-none">
+                <ul class="flex gap-4 m-0 p-0 list-none items-center">
                     <li><a href="<?= BASE_URL ?>/index.php" class="hover:text-indigo-200 transition">Seznam knih</a></li>
-                    <li><a href="<?= BASE_URL ?>/index.php?url=book/create" class="bg-white text-indigo-600 px-4 py-2 rounded-md font-semibold hover:bg-indigo-50 transition shadow-sm">Přidat novou knihu</a></li>
+                    
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <li><a href="<?= BASE_URL ?>/index.php?url=book/create" class="bg-white text-indigo-600 px-4 py-2 rounded-md font-semibold hover:bg-indigo-50 transition shadow-sm">Přidat novou knihu</a></li>
+                        <li class="text-indigo-200 text-sm ml-2">Ahoj, <span class="font-semibold text-white"><?= htmlspecialchars($_SESSION['user_name']) ?></span></li>
+                        <li><a href="<?= BASE_URL ?>/index.php?url=auth/logout" class="bg-indigo-700 hover:bg-indigo-800 text-white px-3 py-1.5 rounded-md text-sm transition">Odhlásit</a></li>
+                    <?php else: ?>
+                        <li><a href="<?= BASE_URL ?>/index.php?url=auth/login" class="hover:text-indigo-200 transition">Přihlásit</a></li>
+                        <li><a href="<?= BASE_URL ?>/index.php?url=auth/register" class="bg-white text-indigo-600 px-4 py-2 rounded-md font-semibold hover:bg-indigo-50 transition shadow-sm">Registrace</a></li>
+                    <?php endif; ?>
                 </ul>
             </nav>
         </div>

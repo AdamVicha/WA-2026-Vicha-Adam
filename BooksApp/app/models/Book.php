@@ -11,22 +11,17 @@ class Book {
     }
 
     // Metoda pro vytvoření záznamu
-    public function create($title, $author, $isbn, $category, $subcategory, $year, $price, $link, $description) {
-        
-        // SQL dotaz pro vložení dat
+    public function create($title, $author, $isbn, $category, $subcategory, $year, $price, $link, $description, $images, $userId) {
         $query = "INSERT INTO " . $this->table_name . " 
-                  (title, author, isbn, category, subcategory, year, price, link, description) 
-                  VALUES (:title, :author, :isbn, :category, :subcategory, :year, :price, :link, :description)";
+                  (title, author, isbn, category, subcategory, year, price, link, description, images, created_by) 
+                  VALUES (:title, :author, :isbn, :category, :subcategory, :year, :price, :link, :description, :images, :created_by)";
 
         $stmt = $this->db->prepare($query);
 
-        // Očištění dat (základní bezpečnostní opatření)
         $title = htmlspecialchars(strip_tags($title));
         $author = htmlspecialchars(strip_tags($author));
         $isbn = htmlspecialchars(strip_tags($isbn));
-        // ... (zde bys mohl očistit i další pole, pro zkrácení ukázky je vynechávám)
 
-        // Navázání parametrů k připravenému dotazu
         $stmt->bindParam(":title", $title);
         $stmt->bindParam(":author", $author);
         $stmt->bindParam(":isbn", $isbn);
@@ -36,8 +31,11 @@ class Book {
         $stmt->bindParam(":price", $price);
         $stmt->bindParam(":link", $link);
         $stmt->bindParam(":description", $description);
+        
+        $imagesJson = json_encode($images);
+        $stmt->bindParam(":images", $imagesJson);
+        $stmt->bindParam(":created_by", $userId);
 
-        // Spuštění dotazu a vrácení výsledku
         if ($stmt->execute()) {
             return true;
         }
@@ -60,22 +58,14 @@ class Book {
         $id, $title, $author, $category, $subcategory, 
         $year, $price, $isbn, $description, $link, $images = []
     ) {
-        $sql = "UPDATE books 
-                SET title = :title, 
-                    author = :author, 
-                    category = :category, 
-                    subcategory = :subcategory, 
-                    year = :year, 
-                    price = :price, 
-                    isbn = :isbn, 
-                    description = :description, 
-                    link = :link, 
-                    images = :images
+        $sql = "UPDATE " . $this->table_name . " 
+                SET title = :title, author = :author, category = :category, subcategory = :subcategory, 
+                    year = :year, price = :price, isbn = :isbn, description = :description, 
+                    link = :link, images = :images
                 WHERE id = :id";
                 
         $stmt = $this->db->prepare($sql);
-
-        // Parametrů je stejné množství jako u create, navíc je pouze :id
+        
         return $stmt->execute([
             ':id' => $id,
             ':title' => $title,
