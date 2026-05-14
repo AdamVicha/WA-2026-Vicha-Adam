@@ -32,11 +32,14 @@
                                     <td class="p-4 text-center space-x-2">
                                         <a href="<?= BASE_URL ?>/index.php?url=book/show/<?= $book['id'] ?>" class="text-indigo-600 hover:text-indigo-900 font-medium">Detail</a>
                                         
-                                        <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] === $book['created_by']): ?>
-                                            <span class="text-gray-300">|</span>
-                                            <a href="<?= BASE_URL ?>/index.php?url=book/edit/<?= $book['id'] ?>" class="text-amber-500 hover:text-amber-700 font-medium">Upravit</a>
-                                            <span class="text-gray-300">|</span>
-                                            <a href="<?= BASE_URL ?>/index.php?url=book/delete/<?= $book['id'] ?>" onclick="return confirm('Opravdu chcete tuto knihu smazat?')" class="text-red-500 hover:text-red-700 font-medium">Smazat</a>
+                                        <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+                                            <div class="flex gap-2">
+                                                <a href="<?= BASE_URL ?>/index.php?url=book/edit/<?= $book['id'] ?>" 
+                                                class="text-blue-600 hover:text-blue-800 text-sm font-medium">Upravit</a>
+                                                <a href="<?= BASE_URL ?>/index.php?url=book/delete/<?= $book['id'] ?>" 
+                                                onclick="return confirm('Opravdu chcete tuto knihu smazat?')"
+                                                class="text-red-600 hover:text-red-800 text-sm font-medium">Smazat</a>
+                                            </div>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
