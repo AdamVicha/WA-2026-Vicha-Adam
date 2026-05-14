@@ -65,17 +65,19 @@ class AuthController {
             if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = !empty($user['nickname']) ? $user['nickname'] : $user['username'];
+                $_SESSION['user_role'] = $user['role'] ?? 'user';
 
                 $this->addSuccessMessage('Vítejte zpět, ' . $_SESSION['user_name'] . '!');
                 header('Location: ' . BASE_URL . '/index.php');
                 exit;
+            }
             } else {
                 $this->addErrorMessage('Nesprávný e-mail nebo heslo.');
                 header('Location: ' . BASE_URL . '/index.php?url=auth/login');
                 exit;
             }
         }
-    }
+    
 
     public function logout() {
         unset($_SESSION['user_id']);

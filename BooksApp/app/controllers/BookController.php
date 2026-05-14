@@ -246,5 +246,13 @@ class BookController {
         }
         return $uploadedFiles;
     }
+
+    protected function requireAdmin() {
+        if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
+            $this->addErrorMessage('Pro tuto akci nemáte dostatečná oprávnění.');
+            header('Location: ' . BASE_URL . '/index.php');
+            exit;
+        }
+    }
 }
 ?>

@@ -48,4 +48,9 @@ class User {
         $stmt->execute([':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function isAdmin(int $id): bool {
+    $user = $this->findById($id);
+    return $user && isset($user['role']) && $user['role'] === 'admin';
+}
 }
