@@ -16,7 +16,7 @@
                                 <th class="p-4 font-semibold">ID</th>
                                 <th class="p-4 font-semibold">Název knihy</th>
                                 <th class="p-4 font-semibold">Autor</th>
-                                <th class="p-4 font-semibold">Rok</th>
+                                <th class="p-4 font-semibold">Kategorie</th> <th class="p-4 font-semibold">Rok</th>
                                 <th class="p-4 font-semibold">Cena</th>
                                 <th class="p-4 font-semibold text-center">Akce</th>
                             </tr>
@@ -27,6 +27,13 @@
                                     <td class="p-4 text-gray-500">#<?= htmlspecialchars($book['id']) ?></td>
                                     <td class="p-4 font-medium text-gray-900"><?= htmlspecialchars($book['title']) ?></td>
                                     <td class="p-4 text-gray-600"><?= htmlspecialchars($book['author']) ?></td>
+                                    
+                                    <td class="p-4 text-gray-600">
+                                        <?= htmlspecialchars(!empty($book['category']) ? $book['category'] : '—') ?>
+                                        <?php if (!empty($book['subcategory'])): ?>
+                                            <span class="text-gray-400 text-sm"> / <?= htmlspecialchars($book['subcategory']) ?></span>
+                                        <?php endif; ?>
+                                    </td>
                                     <td class="p-4 text-gray-600"><?= htmlspecialchars($book['year']) ?></td>
                                     <td class="p-4 text-gray-600 font-semibold"><?= htmlspecialchars($book['price']) ?> Kč</td>
                                     <td class="p-4 text-center space-x-2">
