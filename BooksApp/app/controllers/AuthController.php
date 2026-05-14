@@ -28,6 +28,12 @@ class AuthController {
                 exit;
             }
 
+            if (strlen($password) < 8 || !preg_match("#[0-9]+#", $password) || !preg_match("#[A-Z]+#", $password) || !preg_match("#[a-z]+#", $password)) {
+                $this->addErrorMessage('Heslo musí mít alespoň 8 znaků, a obsahovat velké i malé písmeno a číslici.');
+                header('Location: ' . BASE_URL . '/index.php?url=auth/register');
+                exit;
+            }
+
             require_once '../app/models/Database.php';
             require_once '../app/models/User.php';
             

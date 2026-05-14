@@ -52,7 +52,21 @@
                 </div>    
 
                 <div class="bg-gray-50 p-4 rounded-md border border-gray-200">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Obrázky (zatím neřešíme, můžete ignorovat)</label>
+                    <?php 
+                    $existingImages = !empty($book['images']) ? json_decode($book['images'], true) : [];
+                    if (!empty($existingImages)): 
+                    ?>
+                        <div class="mb-4">
+                            <p class="text-sm font-medium text-gray-700 mb-2">Aktuální obrázky uložené u knihy:</p>
+                            <div class="flex gap-2 flex-wrap">
+                                <?php foreach($existingImages as $img): ?>
+                                    <img src="<?= BASE_URL ?>/public/uploads/<?= htmlspecialchars($img) ?>" class="h-24 w-auto object-cover rounded border border-gray-300">
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nahrát nové obrázky (původní budou přepsány)</label>
                     <input type="file" id="images" name="images[]" multiple accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-amber-100 file:text-amber-800 hover:file:bg-amber-200 transition cursor-pointer">
                 </div>
 

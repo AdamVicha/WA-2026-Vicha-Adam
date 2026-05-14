@@ -59,12 +59,6 @@ class BookController {
     }
 
     public function delete($id = null) {
-        if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
-        $this->addErrorMessage('Pouze administrátor může upravovat knihy.');
-        header('Location: ' . BASE_URL . '/index.php');
-        exit;
-        }
-
         if (!isset($_SESSION['user_id'])) {
             $this->addErrorMessage('Pro smazání knihy se musíte nejprve přihlásit.');
             header('Location: ' . BASE_URL . '/index.php?url=auth/login');
@@ -107,12 +101,6 @@ class BookController {
     }
 
     public function edit($id = null) {
-        if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
-        $this->addErrorMessage('Pouze administrátor může upravovat knihy.');
-        header('Location: ' . BASE_URL . '/index.php');
-        exit;
-        }
-
         if (!isset($_SESSION['user_id'])) {
             $this->addErrorMessage('Pro úpravu knihy se musíte nejprve přihlásit.');
             header('Location: ' . BASE_URL . '/index.php?url=auth/login');
@@ -148,12 +136,6 @@ class BookController {
     }
 
     public function update($id = null) {
-        if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
-        $this->addErrorMessage('Pouze administrátor může upravovat knihy.');
-        header('Location: ' . BASE_URL . '/index.php');
-        exit;
-        }
-        
         if (!$id) {
             $this->addErrorMessage('Nebylo zadáno ID knihy k aktualizaci.');
             header('Location: ' . BASE_URL . '/index.php');
@@ -208,6 +190,10 @@ class BookController {
             $this->addNoticeMessage('Pro úpravu knihy je nutné odeslat formulář.');
             header('Location: ' . BASE_URL . '/index.php');
         }
+        $isUpdated = $bookModel->update(
+        $id, $title, $author, $category, $subcategory, 
+        $year, $price, $isbn, $description, $link, $uploadedImages, $_SESSION['user_id']
+    );
     }
 
     public function show($id = null) {
