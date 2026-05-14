@@ -88,8 +88,10 @@ class BookController {
             exit;
         }
 
-        if ($book['created_by'] !== $_SESSION['user_id']) {
-            $this->addErrorMessage('Nemáte oprávnění smazat tuto knihu, protože nejste jejím autorem.');
+        $isAdmin = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+
+        if ($book['created_by'] !== $_SESSION['user_id'] && !$isAdmin) {
+            $this->addErrorMessage('Nemáte oprávnění, protože nejste autorem knihy ani administrátorem.');
             header('Location: ' . BASE_URL . '/index.php');
             exit;
         }
@@ -134,11 +136,13 @@ class BookController {
             exit;
         }
 
-        if ($book['created_by'] !== $_SESSION['user_id']) {
-            $this->addErrorMessage('Nemáte oprávnění upravovat tuto knihu, protože nejste jejím autorem.');
+        $isAdmin = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+
+        if ($book['created_by'] !== $_SESSION['user_id'] && !$isAdmin) {
+            $this->addErrorMessage('Nemáte oprávnění, protože nejste autorem knihy ani administrátorem.');
             header('Location: ' . BASE_URL . '/index.php');
             exit;
-        }
+}
 
         require_once '../app/views/books/book_edit.php';
     }
@@ -168,8 +172,10 @@ class BookController {
             $bookModel = new Book($db);
             $book = $bookModel->getById($id);
 
-            if (!$book || $book['created_by'] !== $_SESSION['user_id']) {
-                $this->addErrorMessage('Nemáte oprávnění ukládat změny u této knihy, protože nejste jejím autorem.');
+            $isAdmin = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+
+            if ($book['created_by'] !== $_SESSION['user_id'] && !$isAdmin) {
+                $this->addErrorMessage('Nemáte oprávnění, protože nejste autorem knihy ani administrátorem.');
                 header('Location: ' . BASE_URL . '/index.php');
                 exit;
             }

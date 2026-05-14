@@ -6,9 +6,23 @@
                     <h2 class="text-3xl font-bold text-gray-900"><?= htmlspecialchars($book['title'] ?? '') ?></h2>
                     <p class="text-xl text-gray-600 mt-2 font-medium">Autor: <?= htmlspecialchars($book['author'] ?? '') ?></p>
                 </div>
-                <div class="flex gap-3">
-                    <a href="<?= BASE_URL ?>/index.php?url=book/edit/<?= $book['id'] ?>" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-md font-medium transition shadow-sm whitespace-nowrap">Upravit</a>
-                    <a href="<?= BASE_URL ?>/index.php?url=book/delete/<?= $book['id'] ?>" onclick="return confirm('Opravdu chcete tuto knihu smazat?')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-medium transition shadow-sm whitespace-nowrap">Smazat</a>
+                <div class="flex flex-col md:flex-row md:justify-between md:items-start border-b border-gray-200 pb-6 mb-6 gap-4">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900"><?= htmlspecialchars($book['title'] ?? '') ?></h2>
+                        <p class="text-xl text-gray-600 mt-2 font-medium">Autor: <?= htmlspecialchars($book['author'] ?? '') ?></p>
+                    </div>
+                    
+                    <?php 
+                    $isAuthor = isset($_SESSION['user_id']) && $_SESSION['user_id'] === ($book['created_by'] ?? null);
+                    $isAdmin = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+                    
+                    if ($isAuthor || $isAdmin): 
+                    ?>
+                        <div class="flex gap-3">
+                            <a href="<?= BASE_URL ?>/index.php?url=book/edit/<?= $book['id'] ?>" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-md font-medium transition shadow-sm whitespace-nowrap">Upravit</a>
+                            <a href="<?= BASE_URL ?>/index.php?url=book/delete/<?= $book['id'] ?>" onclick="return confirm('Opravdu chcete tuto knihu smazat?')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-medium transition shadow-sm whitespace-nowrap">Smazat</a>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 
