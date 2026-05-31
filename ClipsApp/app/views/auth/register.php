@@ -16,6 +16,11 @@
                 <label class="block text-sm font-medium text-slate-300 mb-1">Heslo</label>
                 <input type="password" name="password" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-brand">
             </div>
+            <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1">Potvrzení hesla</label>
+                <input type="password" name="password_confirm" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-brand">
+                <p class="text-xs text-slate-500 mt-1">Min. 8 znaků, velká a malá písmena, číslice.</p>
+            </div>
             <button type="submit" class="w-full bg-brand text-slate-900 font-bold py-3 px-4 rounded-lg hover:bg-cyan-400 transition shadow-[0_0_15px_rgba(0,210,255,0.2)] mt-2">
                 Vytvořit účet
             </button>

@@ -13,6 +13,20 @@ class AuthController {
             $username = $_POST['username'] ?? '';
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
+            $passwordConfirm = $_POST['password_confirm'] ?? '';
+
+
+            if ($password !== $passwordConfirm) {
+                $this->addErrorMessage('Zadaná hesla se neshodují.');
+                header('Location: ' . BASE_URL . '/index.php?url=auth/register');
+                exit;
+            }
+
+            if (strlen($password) < 8 || !preg_match("#[0-9]+#", $password) || !preg_match("#[A-Z]+#", $password) || !preg_match("#[a-z]+#", $password)) {
+                $this->addErrorMessage('Heslo musí mít alespoň 8 znaků, a obsahovat velké i malé písmeno a číslici.');
+                header('Location: ' . BASE_URL . '/index.php?url=auth/register');
+                exit;
+            }
 
             $db = (new Database())->getConnection();
             $userModel = new User($db);

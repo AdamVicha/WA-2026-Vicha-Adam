@@ -46,13 +46,14 @@ class Clip {
         return $stmt->execute([':id' => $id]);
     }
 
-    public function update($id, $title, $game, $description) {
-        $sql = "UPDATE clips SET title = :title, game = :game, description = :description WHERE id = :id";
+    public function update($id, $title, $game, $description, $updatedBy) {
+        $sql = "UPDATE clips SET title = :title, game = :game, description = :description, updated_by = :updated_by WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
             ':title' => htmlspecialchars(strip_tags($title)),
             ':game' => htmlspecialchars(strip_tags($game)),
             ':description' => htmlspecialchars(strip_tags($description)),
+            ':updated_by' => $updatedBy,
             ':id' => $id
         ]);
     }

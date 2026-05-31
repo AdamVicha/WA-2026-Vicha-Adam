@@ -76,7 +76,7 @@
                             if(isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $comment['user_id'] || $isAdmin)): 
                             ?>
                                 <div class="flex gap-3">
-                                    <a href="<?= BASE_URL ?>/index.php?url=comment/edit/<?= $comment['id'] ?>" class="text-amber-400 hover:text-amber-300 text-xs font-bold">Upravit</a>
+                                    <button type="button" onclick="toggleCommentEdit(<?= $comment['id'] ?>)" class="text-amber-400 hover:text-amber-300 text-xs font-bold cursor-pointer transition">Upravit</button>
                                     <a href="<?= BASE_URL ?>/index.php?url=comment/delete/<?= $comment['id'] ?>" onclick="return confirm('Smazat komentář?')" class="text-red-400 hover:text-red-300 text-xs font-bold">Smazat</a>
                                 </div>
                             <?php endif; ?>

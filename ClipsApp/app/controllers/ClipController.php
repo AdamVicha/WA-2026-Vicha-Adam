@@ -124,12 +124,37 @@ class ClipController {
 
             $isAdmin = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
             if ($clip && ($clip['user_id'] == $_SESSION['user_id'] || $isAdmin)) {
-                $clipModel->update($id, $title, $game, $description);
+                $clipModel->update($id, $title, $game, $description, $_SESSION['user_id']);
                 $_SESSION['flash_messages'][] = ['type' => 'success', 'text' => 'Klip byl úspěšně upraven.'];
             }
             
             header("Location: " . BASE_URL . "/index.php?url=clip/show/" . $id);
             exit;
         }
+    }
+
+    public function delete($id = null) {
+        if ($id && isset($_SESSION['user_id'])) {
+            $db = (new Database())->getConnection();
+            $clipModel = new Clip($db);
+            $clip = $clipModel->getById($id);
+
+            $isAdmin = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+            
+            if ($clip && ($clip['user_id'] == $_SESSION['user_id'] || $isAdmin)) {
+                $filePath = __DIR__ . '/../../public/uploads/videos/' . $clip['video_path'];
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+                
+                $clipModel->delete($id);
+                $_SESSION['flash_messages'][] = ['type' => 'success', 'text' => 'Video bylo úspěšně smazáno.'];
+            } else {
+                $_SESSION['flash_messages'][] = ['type' => 'error', 'text' => 'K odstranění tohoto videa nemáte oprávnění.'];
+            }
+        }
+        
+        header('Location: ' . BASE_URL);
+        exit;
     }
 }
