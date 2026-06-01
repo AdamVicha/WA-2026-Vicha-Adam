@@ -75,3 +75,46 @@
     </header>
 
     <main class="flex-grow max-w-4xl mx-auto w-full px-4 py-8">
+        <?php if (isset($_SESSION['flash_messages']) && !empty($_SESSION['flash_messages'])): ?>
+            <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none">
+                <?php foreach ($_SESSION['flash_messages'] as $index => $msg): ?>
+                    <?php
+                        $border = 'border-slate-600'; $iconColor = 'text-slate-400'; $icon = 'ℹ️';
+                        if ($msg['type'] === 'success') { $border = 'border-green-500'; $iconColor = 'text-green-400'; $icon = '✅'; }
+                        if ($msg['type'] === 'error') { $border = 'border-red-500'; $iconColor = 'text-red-400'; $icon = '❌'; }
+                        if ($msg['type'] === 'notice') { $border = 'border-amber-500'; $iconColor = 'text-amber-400'; $icon = '⚠️'; }
+                    ?>
+                    <div class="toast-message pointer-events-auto flex items-center p-4 min-w-[300px] bg-slate-800 rounded-lg shadow-xl border-l-4 <?= $border ?> transform transition-all duration-300 translate-x-0 opacity-100" id="toast-<?= $index ?>">
+                        <div class="flex-shrink-0 <?= $iconColor ?> text-xl mr-3">
+                            <?= $icon ?>
+                        </div>
+                        <div class="flex-grow text-slate-200 font-medium text-sm">
+                            <?= htmlspecialchars($msg['text']) ?>
+                        </div>
+                        <button onclick="closeToast('toast-<?= $index ?>')" class="ml-4 text-slate-500 hover:text-slate-300 focus:outline-none transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            
+            <?php unset($_SESSION['flash_messages']); ?> <script>
+                function closeToast(id) {
+                    const toast = document.getElementById(id);
+                    if (toast) {
+                        toast.classList.remove('translate-x-0', 'opacity-100');
+                        toast.classList.add('translate-x-full', 'opacity-0');
+                        setTimeout(() => toast.remove(), 300);
+                    }
+                }
+
+                document.addEventListener('DOMContentLoaded', () => {
+                    const toasts = document.querySelectorAll('.toast-message');
+                    toasts.forEach((toast, index) => {
+                        setTimeout(() => {
+                            closeToast(toast.id);
+                        }, 4000 + (index * 500));
+                    });
+                });
+            </script>
+        <?php endif; ?>

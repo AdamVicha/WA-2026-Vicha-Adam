@@ -33,8 +33,8 @@
                 <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-600 border-dashed rounded-lg cursor-pointer bg-slate-700/30 hover:bg-slate-700/50 hover:border-brand transition">
                     <div class="flex flex-col items-center justify-center pt-5 pb-6">
                         <svg class="w-8 h-8 mb-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                        <p class="mb-2 text-sm text-slate-400"><span class="font-semibold text-white">Klikněte pro výběr</span> nebo přetáhněte soubor</p>
-                        <p class="text-xs text-slate-500">MAX. velikost závisí na serveru (obvykle 40MB)</p>
+                        <p class="mb-2 text-sm text-slate-400"><span class="font-semibold text-white">Klikněte pro výběr</span></p>
+                        <p class="text-xs text-slate-500">MAX. velikost 40MB</p>
                     </div>
                     <input type="file" name="video" accept="video/mp4, video/webm" required class="hidden" id="video-upload" />
                 </label>

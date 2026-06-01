@@ -59,7 +59,7 @@ class AuthController {
             if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['username'];
-                $_SESSION['user_role'] = $user['role']; // 'user' nebo 'admin'
+                $_SESSION['user_role'] = $user['role'];
 
                 $this->addSuccessMessage('Vítejte zpět, ' . $_SESSION['user_name'] . '!');
                 header('Location: ' . BASE_URL . '/index.php');

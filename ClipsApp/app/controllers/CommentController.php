@@ -59,11 +59,5 @@ class CommentController {
             exit;
         }
     }
-
-    // Pojistka: Pokud někdo přistoupí na čisté /comment, přesměrujeme ho na hlavní stranu
-    public function index() {
-        header('Location: ' . BASE_URL);
-        exit;
-    }
 }
 ?>

@@ -92,7 +92,6 @@ class ClipController {
         exit;
     }
 
-    // Zobrazení formuláře pro úpravu klipu
     public function edit($id = null) {
         if (!$id || !isset($_SESSION['user_id'])) {
             header("Location: " . BASE_URL); exit;
